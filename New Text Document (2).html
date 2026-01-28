@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeathUnit </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff003c;
+            --primary-dark: #cc0030;
+            --secondary: #00ccff;
+            --dark: #0a0a12;
+            --dark-light: #1a1a24;
+            --gray: #a0a0b0;
+            --light: #f0f0f5;
+            --neon-glow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 30px var(--primary);
+            --neon-glow-blue: 0 0 10px var(--secondary), 0 0 20px var(--secondary);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, .logo, .nav-links a {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 18, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 0, 60, 0.3);
+            padding: 15px 0;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+            margin-right: 10px;
+            font-size: 1.5rem;
+            text-shadow: var(--neon-glow);
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        
+        .logo-main {
+            font-size: 1.5rem;
+        }
+        
+        .logo-sub {
+            font-size: 0.7rem;
+            color: var(--gray);
+            letter-spacing: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 80px;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+           position: absolute;
+    inset: 0;              
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+        
+            
+           
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 60, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 204, 255, 0.1) 0%, transparent 40%),
+                url();
+            filter: brightness(0.3);
+        }
+           .hero-bg video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--light);
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+        
+        .hero-title span {
+            color: var(--primary);
+            text-shadow: var(--neon-glow);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* DOM Load Button */
+        .domload-section {
+            margin: 50px 0;
+        }
+        
+        .domload-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 18px 40px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .domload-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            transition: left 0.5s;
+            z-index: -1;
+        }
+        
+        .domload-btn:hover {
+            color: var(--dark);
+            box-shadow: var(--neon-glow);
+        }
+        
+        .domload-btn:hover::before {
+            left: 0;
+        }
+        
+        .domload-btn i {
+            margin-right: 10px;
+        }
+        
+        /* DOM Content */
+        .dom-content {
+            display: none;
+            background: rgba(26, 26, 36, 0.9);
+            border-left: 3px solid var(--primary);
+            padding: 30px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .dom-content h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .dom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .dom-item {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 0, 60, 0.2);
+        }
+        
+        .dom-item strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--light);
+            text-transform: uppercase;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        /* About Game */
+        .about-game {
+            background: var(--dark-light);
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-text h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .specs-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+        
+        .specs-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .specs-list li span:first-child {
+            color: var(--gray);
+        }
+        
+        .specs-list li span:last-child {
+            color: var(--light);
+            font-weight: 500;
+        }
+        
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            padding: 30px;
+            background: rgba(26, 26, 36, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 1px solid transparent;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 60, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 0, 60, 0.3);
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-icon {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            color: var(--light);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        /* Developer */
+        .developer {
+            background: var(--dark-light);
+        }
+        
+        .developer-profile {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .dev-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(45deg, var(--dark), var(--dark-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dev-image::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, var(--primary), transparent 30%);
+            animation: rotate 10s linear infinite;
+        }
+        
+        .dev-image-inner {
+            position: absolute;
+            width: calc(100% - 8px);
+            height: calc(100% - 8px);
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        .dev-image i {
+            font-size: 5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .dev-info h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .tech-tag {
+            background: rgba(255, 0, 60, 0.1);
+            border: 1px solid rgba(255, 0, 60, 0.3);
+            padding: 8px 15px;
+            font-size: 0.8rem;
+            border-radius: 2px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #05050a;
+            padding: 70px 0 30px;
+            border-top: 1px solid rgba(255, 0, 60, 0.2);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h4 {
+            color: var(--light);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        
+        /* DOM Load Button States */
+        .domload-btn.loading {
+            color: var(--dark);
+            background: var(--primary);
+            pointer-events: none;
+        }
+        
+        .domload-btn.loaded {
+            background: transparent;
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .domload-btn.loaded:hover {
+            box-shadow: var(--neon-glow-blue);
+        }
+        
+        .domload-btn.loaded:hover::before {
+            background: var(--secondary);
+        }
+        /* Add this CSS for mobile rotation message */
+.rotate-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark);
+    z-index: 9999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.rotate-message i {
+    font-size: 4rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+    animation: rotateIcon 2s infinite ease-in-out;
+}
+
+.rotate-message h2 {
+    color: var(--light);
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+.rotate-message p {
+    color: var(--gray);
+    max-width: 300px;
+    margin-bottom: 30px;
+}
+
+.rotate-message .rotate-btn {
+    background: var(--primary);
+    color: var(--dark);
+    border: none;
+    padding: 12px 25px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.rotate-message .rotate-btn:hover {
+    box-shadow: var(--neon-glow);
+    transform: scale(1.05);
+}
+
+@keyframes rotateIcon {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(90deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-90deg); }
+}
+/* Hide rotate message in landscape mode on mobile */
+@media (orientation: landscape) {
+    .rotate-message {
+        display: none !important;
+    }
+}
+
+/* Show rotate message in portrait mode on mobile */
+@media (orientation: portrait) and (max-width: 768px) {
+    .rotate-message {
+        display: flex !important;
+    }
+    body {
+        overflow: hidden;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Mobile Rotation Message -->
+<div class="rotate-message" id="rotateMessage">
+    <i class="fas fa-rotate-right"></i>
+    <h2>Please Rotate Your Device</h2>
+    <p>For the best experience, please rotate your device to landscape mode.</p>
+    <button class="rotate-btn" id="continueButton">Continue Anyway</button>
+</div>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <span class="logo-icon"><i class="fas fa-skull"></i></span>
+                <div class="logo-text">
+                    <span class="logo-main">DeathUnit</span>
+                    <span class="logo-sub">DEMO GAME PROJECT</span>
+                </div>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#developer">Developer</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"> <video src="0105-02_1767800085794.mp4" autoplay muted loop></video></div></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Death <span>Unit</span></h1>
+                <p class="hero-subtitle">A PC based team deathmatch shooter developed in Unreal Engine featuring scripted AI bots, multiple maps, weapon and arm skins, smooth animations, respawn mechanics, real-time score tracking, and core FPS systems, built as a personal project to demonstrate strong coding and game logic skills.</p>
+                
+                <!-- DOM Load Button Section -->
+                <div class="domload-section">
+                    
+                  <a href="G:\done project\DeathUnit.rar" download="">
+                    <button class="domload-btn" id="domloadBtn" >
+                        <i class="fas fa-code-branch"></i> download Game
+  
+                    </button>
+                  </a>
+                    
+                    <div class="dom-content" id="domContent">
+                        <h3>Game Details & System Requirements</h3>
+                        <div class="dom-grid">
+                            <div class="dom-item">
+                                <strong>Game Engine</strong>
+                                <span>Unreal Engine 4.27</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>Developer</strong>
+                                <span>Ojas Chaware (Solo)</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>Genre</strong>
+                                <span>Fps tdm game</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>Platform</strong>
+                                <span>Windows PC (Offline)</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>Release</strong>
+                                <span>10 december 2025</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>Game Size</strong>
+                                <span>2 GB</span>
+                            </div>
+                        </div>
+                        
+                        <h3>System Requirements</h3>
+                        <div class="dom-grid">
+                            <div class="dom-item">
+                                <strong>OS</strong>
+                                <span>Any Windows 64-bit</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>Processor</strong>
+                                <span>Intel i5-8400 / AMD Ryzen 5 2600</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>Memory</strong>
+                                <span>6 GB RAM</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>Graphics</strong>
+                                <span>GTX 1060 6GB / RX 580 8GB</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>DirectX</strong>
+                                <span>Version 12</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>Storage</strong>
+                                <span>3 GB available space</span>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Game -->
+    <section class="section about-game" id="about">
+        <div class="container">
+            <h2 class="section-title">About The Game</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>A Descent Into Madness</h3>
+                    <p>I developed a PC based team deathmatch shooter in Unreal Engine as a fun personal project to showcase my coding skills and logical thinking. Few months ago I thought i should try  to build my own game. I thought it would be a easy task and it will improve my logical thinking. I thought if it is improving my skills then it's good enough reason to start. So i got to work. Since it was my first time creating a game and using unreal engine so It took me a while to build this game. Honestly this project has blown my mind. Moreover I think it was fun for me to build and get to know new things about game developing and technology. Once again it was my first time to build a game. I hope you guys will like it and atleast download it once.</p>
+                    <p></p>
+                    <ul class="specs-list">
+                        <li><span>Gameplay Length:</span><span>500 sec (per match)</span></li>
+                        <li><span>Game Mode:</span><span>Solo Mode</span></li>
+                        <li><span>Difficulty Levels:</span><span>Normal</span></li>
+                        <li><span>Language Support:</span><span>English</span></li>
+                        <li><span>Controller Support:</span><span>Only Keybord and Mouse</span></li>
+                    </ul>
+                </div>
+                <div class="about-text">
+                    <h3>Core Experience</h3>
+                    <p>My game has approzimately everthing which every tdm game have.It has good graphics, gameplay, realistic Environment and many other things. I Have implemented time slow feature in it. About AI, it is a rule based enemy AI using predefined behavior states, including patrolling, engaging targets, and respawn logic, rather than adaptive or learning-based systems. I have used free assets available on fab or Unreal Engine, thanks to all those creator. 
+                        <br><br>
+                    if you want the project file then message me on instagram. <br>id- Ojas3456 
+                    </p>
+                    
+                    <h3 style="margin-top: 30px;">Development Timeline</h3>
+                    <ul class="specs-list">
+                        <li><span>Concept & Design:</span><span>0.1 Month</span></li>
+                        <li><span>Development:</span><span>1.5 Month</span></li>
+                        <li><span>Testing & Polishing:</span><span>1.9 Month</span></li>
+                        <li><span>Total Development:</span><span>1 Month</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+        <div class="container">
+            <h2 class="section-title">Game Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                    <h3>Dynamic FPS System</h3>
+                    <p> Dynamic first-person shooter (FPS) system refers to a set of game mechanics, AI, collision of Environment with character and many more. These systems are designed to make combat feel more responsive,smooth. </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Good Graphics</h3>
+                    <p>Good graphics consist of high-resolution, clear, and immersive visuals, realistic textures, and smooth lighting. It has adjustable Graphics to get good Performance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-puzzle-piece"></i></div>
+                    <h3>AI</h3>
+                    <p>Scripted AI refers to non-player character (NPC) behaviors and game systems governed by pre-programmed, static rules. It has rule based behavior.</p>
+                </div>
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- Developer -->
+    <section class="section developer" id="developer">
+        <div class="container">
+            <h2 class="section-title">Solo Developer</h2>
+            <div class="developer-profile">
+                <div class="dev-image">
+                    <div class="dev-image-inner">
+                        <i class=""></i>
+                         <img src="only_logo-removebg-preview1.png" alt="" >
+                        <h3>Ojas Chaware</h3>
+                        <p>Developer</p>
+                    </div>
+                </div>
+                
+                <div class="dev-info">
+                    <h3>About the Creator</h3>
+                    <p>I am a passionate coder with a strong interest in game development and gameplay programming. I enjoy building complete systems from scratch. I have hands-on experience working with Unreal Engine, where I develop games using my skills. I focus on writing clean logic, solving problems, and turning ideas into fully playable experiences. I continuously work on improving my skills and enjoy learning new technologies. Now i am also trying to get into the field of Application development and AI.</p>
+                    
+                    
+                    <h3 style="margin-top: 30px;">Development Philosophy</h3>
+                    <p>I believe in creating experiences that stay with players long after they've finished playing. I believe in continuous learning because technology changes rapidly and as a good coder, I must always update my knowledge.</p>
+                    
+                    <div class="tech-tags">
+                        <span class="tech-tag">Unreal Engine</span>
+                        <span class="tech-tag">C++</span>
+                        <span class="tech-tag">Blueprints</span>
+                        <span class="tech-tag">Blender</span>
+                        <span class="tech-tag">App development</span>
+                        
+                        <span class="tech-tag">Perforce</span>
+                        <span class="tech-tag">Visual Studio</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">DeathUnit</div>
+                    <p>An offline PC fun to play game created with Unreal Engine 4 by a solo developer.</p>
+                    
+                    <div class="social-icons">
+                        
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-steam"></i></a>
+                    </div>
+                    <p style="font-size: xx-small;">will be created soon </p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Game Info</h4>
+                    <ul>
+                        <li><a href="#home">System Requirements and download</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#developer">Developer</a></li>
+                    </ul>
+                </div>
+              
+                
+                <div class="footer-links">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>Instagram: Ojas3456</li>
+                        <li>Email: <p style="font-size: xx-small;"> will be uploaded soon</p></li>
+                        <li>Contact: <p style="font-size: xx-small;"> will be uploaded soon</p> </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 DeathUnit. All rights reserved.</p>
+                <p>Website designed for DeathUnit game.</p>
+            </div>
+        </div>
+    </footer>
+
+   <script>
+    // Mobile rotation detection and handling
+    document.addEventListener('DOMContentLoaded', function() {
+        const rotateMessage = document.getElementById('rotateMessage');
+        const continueButton = document.getElementById('continueButton');
+        
+        // Function to check if device is mobile
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        // Function to check orientation and screen size
+        function checkOrientation() {
+            if (isMobileDevice()) {
+                const isPortrait = window.innerHeight > window.innerWidth;
+                const isSmallScreen = window.innerWidth <= 768;
+                
+                // Show message if in portrait mode on small screens (mobile)
+                if (isPortrait && isSmallScreen) {
+                    rotateMessage.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    rotateMessage.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            } else {
+                // Not a mobile device, hide message
+                rotateMessage.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Initial check
+        checkOrientation();
+        
+        // Check on orientation change
+        window.addEventListener('orientationchange', checkOrientation);
+        
+        // Check on resize (for desktop to mobile transitions)
+        window.addEventListener('resize', checkOrientation);
+        
+        // Continue button functionality
+        continueButton.addEventListener('click', function() {
+            rotateMessage.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            // Store preference in localStorage
+            localStorage.setItem('rotationWarningDismissed', 'true');
+        });
+        
+        // Check if user previously dismissed the warning
+        if (localStorage.getItem('rotationWarningDismissed') === 'true') {
+            rotateMessage.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // DOM Load Button Functionality - Keep this part from your original code
+        const domloadBtn = document.getElementById('domloadBtn');
+        const domContent = document.getElementById('domContent');
+        let contentLoaded = false;
+        
+        // Add fade-in animation to elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all sections
+        document.querySelectorAll('.section, .hero-content, .feature-card, .about-content, .developer-profile').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // DOM Load Button functionality
+        domloadBtn.addEventListener('click', function() {
+            if (!contentLoaded) {
+                // Show loading state
+                domloadBtn.classList.add('loading');
+                domloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading Data...';
+                
+                // Simulate data loading
+                setTimeout(() => {
+                    // Show content with animation
+                    domContent.style.display = 'block';
+                    domContent.classList.add('fade-in');
+                    
+                    // Scroll to content smoothly
+                    domContent.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center'
+                    });
+                    
+                    // Update button state
+                    domloadBtn.classList.remove('loading');
+                    domloadBtn.classList.add('loaded');
+                    domloadBtn.innerHTML = '<i class="fas fa-check"></i> Download started <p style="text-align: center; font-size: xx-small;"><br> click again if download not started.</p>';
+                    
+                    contentLoaded = true;
+                }, 1200);
+            } else {
+                // Hide content
+                domContent.style.display = 'none';
+                
+                // Reset button
+                domloadBtn.classList.remove('loaded');
+                domloadBtn.innerHTML = '<i class="fas fa-code-branch"></i> Download Game';
+                
+                contentLoaded = false;
+            }
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add subtle animation to hero title
+        const heroTitle = document.querySelector('.hero-title');
+        heroTitle.style.opacity = '0';
+        heroTitle.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            heroTitle.style.transition = 'opacity 1s, transform 1s';
+            heroTitle.style.opacity = '1';
+            heroTitle.style.transform = 'translateY(0)';
+        }, 300);
+    });
+</script>
+</body>
+</html>
