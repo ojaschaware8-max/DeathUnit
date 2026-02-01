@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeathUnit </title>
+    <title>DeathUnit</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff003c;
-            --primary-dark: #cc0030;
+            --primary: #ff144b;
+            --primary-dark: #ff0f47;
             --secondary: #00ccff;
             --dark: #0a0a12;
             --dark-light: #1a1a24;
@@ -40,7 +40,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -55,6 +55,11 @@
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 0, 60, 0.3);
             padding: 15px 0;
+            transition: transform 0.3s ease-in-out, background 0.3s, backdrop-filter 0.3s;
+        }
+        
+        .header-hidden {
+            transform: translateY(-100%);
         }
         
         .header-container {
@@ -135,28 +140,26 @@
         }
         
         .hero-bg {
-           position: absolute;
-    inset: 0;              
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1;
-        
-            
-           
+            position: absolute;
+            inset: 0;              
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
             background: 
                 radial-gradient(circle at 20% 30%, rgba(255, 0, 60, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(0, 204, 255, 0.1) 0%, transparent 40%),
-                url();
+                radial-gradient(circle at 80% 70%, rgba(0, 204, 255, 0.1) 0%, transparent 40%);
             filter: brightness(0.3);
         }
-           .hero-bg video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;  }
+        
+        .hero-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
         
         .hero-content {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             text-align: center;
             padding: 40px 0;
@@ -179,7 +182,7 @@
             font-size: 1.2rem;
             color: var(--gray);
             margin-bottom: 40px;
-            max-width: 600px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -232,20 +235,195 @@
             margin-right: 10px;
         }
         
+        /* Download Options */
+        .download-options {
+            margin-top: 30px;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .download-option-btn {
+            background: rgba(26, 26, 36, 0.8);
+            color: var(--light);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            margin: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-radius: 4px;
+            min-width: 200px;
+        }
+        
+        .download-option-btn:hover {
+            border-color: var(--primary);
+            background: rgba(255, 0, 60, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        /* Download Containers */
+        .download-container {
+            background: rgba(26, 26, 36, 0.95);
+            padding: 25px;
+            margin-top: 20px;
+            border-radius: 5px;
+            border-left: 3px solid var(--secondary);
+            animation: fadeIn 0.5s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .download-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .download-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .download-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        .local-files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .local-file-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border: 1px solid rgba(255, 0, 60, 0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .local-file-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 60, 0.1);
+        }
+        
+        .local-file-item.downloaded::before {
+            content: '✓';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #00ff00;
+            color: var(--dark);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .download-link {
+            display: block;
+            padding: 10px 15px;
+            background: var(--primary);
+            color: var(--dark);
+            text-decoration: none;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-link:hover {
+            background: var(--primary-dark);
+            box-shadow: var(--neon-glow);
+            transform: scale(1.02);
+        }
+        
+        .download-link.loading {
+            background: var(--secondary);
+            pointer-events: none;
+        }
+        
+        .google-drive-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .drive-link {
+            flex: 1;
+            min-width: 280px;
+            background: rgba(66, 133, 244, 0.1);
+            border: 1px solid rgba(66, 133, 244, 0.3);
+            padding: 20px;
+            transition: all 0.3s;
+            border-radius: 5px;
+        }
+        
+        .drive-link:hover {
+            background: rgba(66, 133, 244, 0.2);
+            border-color: #4285F4;
+            transform: translateY(-3px);
+        }
+        
+        .drive-btn {
+            display: block;
+            padding: 12px;
+            background: #4285F4;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s;
+            border-radius: 3px;
+        }
+        
+        .drive-btn:hover {
+            background: #3367D6;
+            box-shadow: 0 5px 15px rgba(66, 133, 244, 0.4);
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 5px;
+        }
+        
         /* DOM Content */
         .dom-content {
-            display: none;
             background: rgba(26, 26, 36, 0.9);
             border-left: 3px solid var(--primary);
             padding: 30px;
             margin-top: 40px;
             backdrop-filter: blur(10px);
-        }
-        
-        .dom-content h3 {
-            color: var(--secondary);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
+            animation: fadeIn 0.8s ease;
         }
         
         .dom-grid {
@@ -535,7 +713,7 @@
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
@@ -556,115 +734,80 @@
             .section-title {
                 font-size: 2rem;
             }
+            
+            .download-option-btn {
+                min-width: 100%;
+                margin: 5px 0;
+            }
+            
+            .local-files-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .google-drive-links {
+                grid-template-columns: 1fr;
+            }
+            
+            .drive-link {
+                min-width: 100%;
+            }
         }
         
-        /* DOM Load Button States */
-        .domload-btn.loading {
+        /* Loading Animation */
+        .loading {
+            position: relative;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+        
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* Bulk Download Button */
+        .bulk-download-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: var(--dark);
-            background: var(--primary);
-            pointer-events: none;
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
-        .domload-btn.loaded {
-            background: transparent;
-            color: var(--secondary);
-            border-color: var(--secondary);
+        .bulk-download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 0, 60, 0.3);
         }
         
-        .domload-btn.loaded:hover {
-            box-shadow: var(--neon-glow-blue);
+        .bulk-download-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
         }
-        
-        .domload-btn.loaded:hover::before {
-            background: var(--secondary);
-        }
-        /* Add this CSS for mobile rotation message */
-.rotate-message {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--dark);
-    z-index: 9999;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-}
-
-.rotate-message i {
-    font-size: 4rem;
-    color: var(--primary);
-    margin-bottom: 20px;
-    animation: rotateIcon 2s infinite ease-in-out;
-}
-
-.rotate-message h2 {
-    color: var(--light);
-    margin-bottom: 15px;
-    font-size: 1.8rem;
-}
-
-.rotate-message p {
-    color: var(--gray);
-    max-width: 300px;
-    margin-bottom: 30px;
-}
-
-.rotate-message .rotate-btn {
-    background: var(--primary);
-    color: var(--dark);
-    border: none;
-    padding: 12px 25px;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    border-radius: 0;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.rotate-message .rotate-btn:hover {
-    box-shadow: var(--neon-glow);
-    transform: scale(1.05);
-}
-
-@keyframes rotateIcon {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(90deg); }
-    50% { transform: rotate(0deg); }
-    75% { transform: rotate(-90deg); }
-}
-/* Hide rotate message in landscape mode on mobile */
-@media (orientation: landscape) {
-    .rotate-message {
-        display: none !important;
-    }
-}
-
-/* Show rotate message in portrait mode on mobile */
-@media (orientation: portrait) and (max-width: 768px) {
-    .rotate-message {
-        display: flex !important;
-    }
-    body {
-        overflow: hidden;
-    }
-}
     </style>
 </head>
 <body>
-    <!-- Mobile Rotation Message -->
-<div class="rotate-message" id="rotateMessage">
-    <i class="fas fa-rotate-right"></i>
-    <h2>Please Rotate Your Device</h2>
-    <p>For the best experience, please rotate your device to landscape mode.</p>
-    <button class="rotate-btn" id="continueButton">Continue Anyway</button>
-</div>
     <!-- Header -->
     <header>
         <div class="container header-container">
@@ -687,7 +830,9 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-bg"> <video src="0105-02_1767800085794.mp4" autoplay muted loop></video></div></div>
+        <div class="hero-bg">
+            <video src="0105-02_1767800085794.mp4" autoplay muted loop></video>
+        </div>
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title">Death <span>Unit</span></h1>
@@ -695,15 +840,128 @@
                 
                 <!-- DOM Load Button Section -->
                 <div class="domload-section">
-                    
-                  <a href="G:\done project\DeathUnit.rar" download="">
-                    <button class="domload-btn" id="domloadBtn" >
-                        <i class="fas fa-code-branch"></i> download Game
-  
+                    <button class="domload-btn" id="domloadBtn" onclick="showDownloadOptions()">
+                        <i class="fas fa-code-branch"></i> Download Game
                     </button>
-                  </a>
                     
-                    <div class="dom-content" id="domContent">
+                    <!-- Download Options (Initially Hidden) -->
+                    <div class="download-options" id="downloadOptions" style="display: none;">
+                        <h3 style="color: var(--secondary); margin-bottom: 15px; text-align: center;">Choose Download Method</h3>
+                        <div style="text-align: center;">
+                            <button class="download-option-btn" onclick="showLocalFiles()">
+                                <i class="fas fa-download"></i> Download All 11 Parts
+                            </button>
+                            <button class="download-option-btn" onclick="showGoogleDrive()">
+                                <i class="fab fa-google-drive"></i> Google Drive
+                            </button>
+                        </div>
+                        
+                        <!-- Local Files Container -->
+                        <div id="localFilesContainer" style="display: none;">
+                            <div class="download-container">
+                                <h4 style="color: var(--secondary); margin-bottom: 15px;">
+                                    <i class="fas fa-download"></i> Download All 11 Game Parts
+                                </h4>
+                                <p style="color: var(--gray); margin-bottom: 10px;">
+                                    Total Game Size: 1 GB | 11 Parts of 100MB each | Format: RAR | Password: none
+                                </p>
+                                
+                                <!-- Download Progress -->
+                                <div class="progress-container">
+                                    <div class="progress-bar" id="downloadProgressBar"></div>
+                                </div>
+                                
+                                <!-- Bulk Download Button -->
+                                <button class="bulk-download-btn" onclick="downloadAllParts()" id="bulkDownloadBtn">
+                                    <i class="fas fa-download"></i> Download All 11 Parts at Once
+                                </button>
+                                
+                                <!-- Local Files Grid -->
+                                <div class="local-files-grid" id="localFilesGrid">
+                                    <!-- 11 Parts will be generated here -->
+                                </div>
+                                
+                                <div style="margin-top: 20px; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 5px;">
+                                    <p style="color: var(--light); margin-bottom: 10px; font-size: 0.9rem;">
+                                        <strong>Instructions:</strong> 
+                                        1. Download all 11 parts to the same folder<br>
+                                        2. Extract "DeathUnit_Part1.rar" using WinRAR or 7-Zip<br>
+                                        3. All parts will automatically combine during extraction<br>
+                                        4. Run "DeathUnit.exe" from the extracted folder
+                                    </p>
+                                    <div id="downloadStatus" style="color: var(--secondary); font-size: 0.9rem; margin-top: 10px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Google Drive Container -->
+                        <div id="googleDriveContainer" style="display: none;">
+                            <div class="download-container">
+                                <h4 style="color: var(--secondary); margin-bottom: 15px;">
+                                    <i class="fab fa-google-drive"></i> Google Drive Download
+                                </h4>
+                                <p style="color: var(--gray); margin-bottom: 20px;">
+                                    Complete game package available on Google Drive
+                                </p>
+                                
+                                <div class="google-drive-links">
+                                    <!-- Google Drive Complete Package -->
+                                    <div class="drive-link">
+                                        <h5 style="color: var(--light); margin-bottom: 5px;">Complete Game Package</h5>
+                                        <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 10px;">Single file - 1 GB</p>
+                                        <a href="https://drive.google.com/uc?export=download&id=1ut4I0uvfwfbjuwTXu_n_i4NmvJdHdoPE" 
+                                           class="drive-btn" target="_blank" 
+                                           onclick="trackGoogleDriveDownload()">
+                                            <i class="fas fa-download"></i> Download Full Game
+                                        </a>
+                                        <p style="color: var(--gray); font-size: 0.8rem; margin-top: 10px;">
+                                            <i class="fas fa-info-circle"></i> Recommended for fast internet
+                                        </p>
+                                    </div>
+                                    
+                                    <!-- Google Drive Parts -->
+                                    <div class="drive-link">
+                                        <h5 style="color: var(--light); margin-bottom: 5px;">Game Parts (11 Parts)</h5>
+                                        <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 10px;">Split into 11 parts</p>
+                                        <a href="https://drive.google.com/drive/folders/1Jhmc8uJ1Tz1A1TWZmH-EEC01hS2ChPcY?usp=sharing" 
+                                           class="drive-btn" target="_blank"
+                                           style="background: var(--primary);">
+                                            <i class="fab fa-google-drive"></i> View All 11 Parts
+                                        </a>
+                                        <p style="color: var(--gray); font-size: 0.8rem; margin-top: 10px;">
+                                            <i class="fas fa-info-circle"></i> Recommended for slow internet
+                                        </p>
+                                    </div>
+                                    
+                                    <!-- Alternative Link -->
+                                    <div class="drive-link">
+                                        <h5 style="color: var(--light); margin-bottom: 5px;">Alternative Download</h5>
+                                        <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 10px;">Mirror Link</p>
+                                        <a href="#" 
+                                           class="drive-btn" target="_blank"
+                                           style="background: linear-gradient(45deg, #8B0000, #FF4500);">
+                                            <i class="fas fa-cloud-download-alt"></i> Mirror Download
+                                        </a>
+                                        <p style="color: var(--gray); font-size: 0.8rem; margin-top: 10px;">
+                                            <i class="fas fa-exclamation-triangle"></i> Use if Google Drive fails
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top: 20px; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 5px;">
+                                    <p style="color: var(--light); margin-bottom: 10px; font-size: 0.9rem;">
+                                        <strong>Note:</strong> 
+                                        • If you see "Virus scan warning", click "Download anyway"<br>
+                                        • Google Drive may limit downloads for large files<br>
+                                        • Use a download manager for better speed
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- DOM Content (Game Details) -->
+                    <div class="dom-content" id="domContent" style="display: none;">
                         <h3>Game Details & System Requirements</h3>
                         <div class="dom-grid">
                             <div class="dom-item">
@@ -716,7 +974,7 @@
                             </div>
                             <div class="dom-item">
                                 <strong>Genre</strong>
-                                <span>Fps tdm game</span>
+                                <span>FPS TDM Game</span>
                             </div>
                             <div class="dom-item">
                                 <strong>Platform</strong>
@@ -724,11 +982,19 @@
                             </div>
                             <div class="dom-item">
                                 <strong>Release</strong>
-                                <span>10 december 2025</span>
+                                <span>10 December 2025</span>
                             </div>
                             <div class="dom-item">
                                 <strong>Game Size</strong>
-                                <span>2 GB</span>
+                                <span>1 GB (11 Parts)</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>Total Parts</strong>
+                                <span>11 RAR Files</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>Compression</strong>
+                                <span>WinRAR / 7-Zip</span>
                             </div>
                         </div>
                         
@@ -736,7 +1002,7 @@
                         <div class="dom-grid">
                             <div class="dom-item">
                                 <strong>OS</strong>
-                                <span>Any Windows 64-bit</span>
+                                <span>Windows 10/11 64-bit</span>
                             </div>
                             <div class="dom-item">
                                 <strong>Processor</strong>
@@ -744,7 +1010,7 @@
                             </div>
                             <div class="dom-item">
                                 <strong>Memory</strong>
-                                <span>6 GB RAM</span>
+                                <span>8 GB RAM</span>
                             </div>
                             <div class="dom-item">
                                 <strong>Graphics</strong>
@@ -756,11 +1022,13 @@
                             </div>
                             <div class="dom-item">
                                 <strong>Storage</strong>
-                                <span>3 GB available space</span>
+                                <span>10 GB available space</span>
+                            </div>
+                            <div class="dom-item">
+                                <strong>Extractor</strong>
+                                <span>WinRAR or 7-Zip Required</span>
                             </div>
                         </div>
-                        
-                        
                     </div>
                 </div>
             </div>
@@ -774,29 +1042,26 @@
             <div class="about-content">
                 <div class="about-text">
                     <h3>A Descent Into Madness</h3>
-                    <p>I developed a PC based team deathmatch shooter in Unreal Engine as a fun personal project to showcase my coding skills and logical thinking. Few months ago I thought i should try  to build my own game. I thought it would be a easy task and it will improve my logical thinking. I thought if it is improving my skills then it's good enough reason to start. So i got to work. Since it was my first time creating a game and using unreal engine so It took me a while to build this game. Honestly this project has blown my mind. Moreover I think it was fun for me to build and get to know new things about game developing and technology. Once again it was my first time to build a game. I hope you guys will like it and atleast download it once.</p>
-                    <p></p>
+                    <p>I developed a PC based team deathmatch shooter in Unreal Engine as a fun personal project to showcase my coding skills and logical thinking. Few months ago I thought i should try to build my own game. I thought it would be a easy task and it will improve my logical thinking. I thought if it is improving my skills then it's good enough reason to start. So i got to work. Since it was my first time creating a game and using unreal engine so It took me a while to build this game. Honestly this project has blown my mind. Moreover I think it was fun for me to build and get to know new things about game developing and technology. Once again it was my first time to build a game. I hope you guys will like it and atleast download it once.</p>
                     <ul class="specs-list">
                         <li><span>Gameplay Length:</span><span>500 sec (per match)</span></li>
                         <li><span>Game Mode:</span><span>Solo Mode</span></li>
                         <li><span>Difficulty Levels:</span><span>Normal</span></li>
                         <li><span>Language Support:</span><span>English</span></li>
-                        <li><span>Controller Support:</span><span>Only Keybord and Mouse</span></li>
+                        <li><span>Controller Support:</span><span>Only Keyboard and Mouse</span></li>
                     </ul>
                 </div>
                 <div class="about-text">
                     <h3>Core Experience</h3>
-                    <p>My game has approzimately everthing which every tdm game have.It has good graphics, gameplay, realistic Environment and many other things. I Have implemented time slow feature in it. About AI, it is a rule based enemy AI using predefined behavior states, including patrolling, engaging targets, and respawn logic, rather than adaptive or learning-based systems. I have used free assets available on fab or Unreal Engine, thanks to all those creator. 
-                        <br><br>
-                    if you want the project file then message me on instagram. <br>id- Ojas3456 
-                    </p>
+                    <p>My game has approximately everything which every TDM game have. It has good graphics, gameplay, realistic Environment and many other things. I Have implemented time slow feature in it. About AI, it is a rule based enemy AI using predefined behavior states, including patrolling, engaging targets, and respawn logic, rather than adaptive or learning-based systems. I have used free assets available on Fab or Unreal Engine, thanks to all those creator.</p>
                     
-                    <h3 style="margin-top: 30px;">Development Timeline</h3>
+                    <h3 style="margin-top: 30px;">Download Information</h3>
                     <ul class="specs-list">
-                        <li><span>Concept & Design:</span><span>0.1 Month</span></li>
-                        <li><span>Development:</span><span>1.5 Month</span></li>
-                        <li><span>Testing & Polishing:</span><span>1.9 Month</span></li>
-                        <li><span>Total Development:</span><span>1 Month</span></li>
+                        <li><span>Total Game Size:</span><span>1 GB</span></li>
+                        <li><span>Number of Parts:</span><span>11 RAR Files</span></li>
+                        <li><span>Each Part Size:</span><span>≈ 100 MB</span></li>
+                        <li><span>Extraction Tool:</span><span>WinRAR / 7-Zip</span></li>
+                        <li><span>Installation Time:</span><span>5-10 minutes</span></li>
                     </ul>
                 </div>
             </div>
@@ -811,7 +1076,7 @@
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-brain"></i></div>
                     <h3>Dynamic FPS System</h3>
-                    <p> Dynamic first-person shooter (FPS) system refers to a set of game mechanics, AI, collision of Environment with character and many more. These systems are designed to make combat feel more responsive,smooth. </p>
+                    <p>Dynamic first-person shooter (FPS) system refers to a set of game mechanics, AI, collision of Environment with character and many more. These systems are designed to make combat feel more responsive, smooth.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
@@ -823,7 +1088,6 @@
                     <h3>AI</h3>
                     <p>Scripted AI refers to non-player character (NPC) behaviors and game systems governed by pre-programmed, static rules. It has rule based behavior.</p>
                 </div>
-               
             </div>
         </div>
     </section>
@@ -835,8 +1099,7 @@
             <div class="developer-profile">
                 <div class="dev-image">
                     <div class="dev-image-inner">
-                        <i class=""></i>
-                         <img src="only_logo-removebg-preview1.png" alt="" >
+                        <i class=""><img src="G:\done project\only_logo-removebg-preview1.png" alt=""></i>
                         <h3>Ojas Chaware</h3>
                         <p>Developer</p>
                     </div>
@@ -845,7 +1108,6 @@
                 <div class="dev-info">
                     <h3>About the Creator</h3>
                     <p>I am a passionate coder with a strong interest in game development and gameplay programming. I enjoy building complete systems from scratch. I have hands-on experience working with Unreal Engine, where I develop games using my skills. I focus on writing clean logic, solving problems, and turning ideas into fully playable experiences. I continuously work on improving my skills and enjoy learning new technologies. Now i am also trying to get into the field of Application development and AI.</p>
-                    
                     
                     <h3 style="margin-top: 30px;">Development Philosophy</h3>
                     <p>I believe in creating experiences that stay with players long after they've finished playing. I believe in continuous learning because technology changes rapidly and as a good coder, I must always update my knowledge.</p>
@@ -856,8 +1118,7 @@
                         <span class="tech-tag">Blueprints</span>
                         <span class="tech-tag">Blender</span>
                         <span class="tech-tag">App development</span>
-                        
-                        <span class="tech-tag">Perforce</span>
+                        <span class="tech-tag">Java</span>
                         <span class="tech-tag">Visual Studio</span>
                     </div>
                 </div>
@@ -874,13 +1135,12 @@
                     <p>An offline PC fun to play game created with Unreal Engine 4 by a solo developer.</p>
                     
                     <div class="social-icons">
-                        
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-youtube"></i></a>
                         <a href="#"><i class="fab fa-discord"></i></a>
                         <a href="#"><i class="fab fa-steam"></i></a>
                     </div>
-                    <p style="font-size: xx-small;">will be created soon </p>
+                    <p style="font-size: xx-small;">will be created soon</p>
                 </div>
                 
                 <div class="footer-links">
@@ -891,172 +1151,458 @@
                         <li><a href="#developer">Developer</a></li>
                     </ul>
                 </div>
-              
                 
                 <div class="footer-links">
                     <h4>Contact</h4>
                     <ul>
                         <li>Instagram: Ojas3456</li>
-                        <li>Email: <p style="font-size: xx-small;"> will be uploaded soon</p></li>
-                        <li>Contact: <p style="font-size: xx-small;"> will be uploaded soon</p> </li>
+                        <li>Email: <p style="font-size: xx-small;">will be uploaded soon</p></li>
+                        <li>Contact: <p style="font-size: xx-small;">will be uploaded soon</p></li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
                 <p>&copy; 2026 DeathUnit. All rights reserved.</p>
-                <p>Website designed for DeathUnit game.</p>
+                <p>Website designed for DeathUnit game. Game size: 1 GB (11 parts)</p>
             </div>
         </div>
     </footer>
 
-   <script>
-    // Mobile rotation detection and handling
-    document.addEventListener('DOMContentLoaded', function() {
-        const rotateMessage = document.getElementById('rotateMessage');
-        const continueButton = document.getElementById('continueButton');
+    <script>
+        // Game configuration
+        const TOTAL_PARTS = 11;
+        const PART_SIZE = "100 MB";
+        const TOTAL_SIZE = "1 GB";
         
-        // Function to check if device is mobile
-        function isMobileDevice() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        // Download tracking variables
+        let downloadedParts = [];
+        let isDownloadingAll = false;
+        
+        // Auto-hide header variables
+        let lastScrollTop = 0;
+        let isHeaderHidden = false;
+        let scrollThreshold = 100;
+        let mouseInHeaderArea = false;
+        
+        // Initialize auto-hide header
+        function setupAutoHideHeader() {
+            const header = document.querySelector('header');
+            let ticking = false;
+            
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        handleScroll(header);
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+            
+            // Show header when mouse is near top
+            document.addEventListener('mousemove', function(e) {
+                if (e.clientY < 80) { // Mouse within 80px from top
+                    mouseInHeaderArea = true;
+                    showHeader(header);
+                } else {
+                    mouseInHeaderArea = false;
+                }
+            });
+            
+            // Keep header visible when interacting with it
+            header.addEventListener('mouseenter', function() {
+                mouseInHeaderArea = true;
+                showHeader(header);
+            });
+            
+            header.addEventListener('mouseleave', function() {
+                mouseInHeaderArea = false;
+            });
         }
         
-        // Function to check orientation and screen size
-        function checkOrientation() {
-            if (isMobileDevice()) {
-                const isPortrait = window.innerHeight > window.innerWidth;
-                const isSmallScreen = window.innerWidth <= 768;
-                
-                // Show message if in portrait mode on small screens (mobile)
-                if (isPortrait && isSmallScreen) {
-                    rotateMessage.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    rotateMessage.style.display = 'none';
-                    document.body.style.overflow = 'auto';
+        function handleScroll(header) {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollDiff = scrollTop - lastScrollTop;
+            
+            // Update header background based on scroll position
+            if (scrollTop > 100) {
+                header.style.background = 'rgba(10, 10, 18, 0.98)';
+                header.style.backdropFilter = 'blur(15px)';
+            } else {
+                header.style.background = 'rgba(10, 10, 18, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            }
+            
+            // Auto-hide logic
+            if (scrollTop > scrollThreshold) {
+                // Scrolling down - hide header
+                if (scrollDiff > 10 && !mouseInHeaderArea) {
+                    hideHeader(header);
+                }
+                // Scrolling up - show header
+                else if (scrollDiff < -10) {
+                    showHeader(header);
                 }
             } else {
-                // Not a mobile device, hide message
-                rotateMessage.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                // Always show header near top
+                showHeader(header);
+            }
+            
+            lastScrollTop = scrollTop;
+        }
+        
+        function hideHeader(header) {
+            if (!isHeaderHidden) {
+                header.style.transform = 'translateY(-100%)';
+                isHeaderHidden = true;
             }
         }
         
-        // Initial check
-        checkOrientation();
-        
-        // Check on orientation change
-        window.addEventListener('orientationchange', checkOrientation);
-        
-        // Check on resize (for desktop to mobile transitions)
-        window.addEventListener('resize', checkOrientation);
-        
-        // Continue button functionality
-        continueButton.addEventListener('click', function() {
-            rotateMessage.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            
-            // Store preference in localStorage
-            localStorage.setItem('rotationWarningDismissed', 'true');
-        });
-        
-        // Check if user previously dismissed the warning
-        if (localStorage.getItem('rotationWarningDismissed') === 'true') {
-            rotateMessage.style.display = 'none';
-            document.body.style.overflow = 'auto';
+        function showHeader(header) {
+            if (isHeaderHidden) {
+                header.style.transform = 'translateY(0)';
+                isHeaderHidden = false;
+            }
         }
         
-        // DOM Load Button Functionality - Keep this part from your original code
-        const domloadBtn = document.getElementById('domloadBtn');
-        const domContent = document.getElementById('domContent');
-        let contentLoaded = false;
-        
-        // Add fade-in animation to elements on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, observerOptions);
-        
-        // Observe all sections
-        document.querySelectorAll('.section, .hero-content, .feature-card, .about-content, .developer-profile').forEach(el => {
-            observer.observe(el);
-        });
-        
-        // DOM Load Button functionality
-        domloadBtn.addEventListener('click', function() {
-            if (!contentLoaded) {
-                // Show loading state
-                domloadBtn.classList.add('loading');
-                domloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading Data...';
+        // Generate 11 game parts
+        function generateGameParts() {
+            const filesGrid = document.getElementById('localFilesGrid');
+            filesGrid.innerHTML = '';
+            
+            for (let i = 1; i <= TOTAL_PARTS; i++) {
+                const fileName = `DeathUnit.part${i.toString().padStart(2, '0')}.rar`;
+                const filePath = `G:\done project/${fileName}`;
+                const partSize = PART_SIZE;
                 
-                // Simulate data loading
-                setTimeout(() => {
-                    // Show content with animation
-                    domContent.style.display = 'block';
-                    domContent.classList.add('fade-in');
+                const fileItem = document.createElement('div');
+                fileItem.className = 'local-file-item';
+                fileItem.id = `file-part-${i}`;
+                fileItem.innerHTML = `
+                    <h5 style="color: var(--light); margin-bottom: 5px;">${fileName}</h5>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="color: var(--secondary); font-size: 0.85rem;">
+                            <i class="fas fa-hdd"></i> ${partSize}
+                        </span>
+                        <span style="color: var(--gray); font-size: 0.85rem;">
+                            Part ${i}/${TOTAL_PARTS}
+                        </span>
+                    </div>
+                    <a href="${filePath}" download="${fileName}" 
+                       class="download-link" onclick="trackDownload(${i}, this)">
+                        <i class="fas fa-download"></i> Download Part ${i}
+                    </a>
+                    <div class="download-status" id="status-part-${i}" 
+                         style="margin-top: 8px; font-size: 0.8rem;"></div>
+                `;
+                
+                filesGrid.appendChild(fileItem);
+                
+                // Mark as downloaded if already downloaded
+                if (downloadedParts.includes(i)) {
+                    markAsDownloaded(i);
+                }
+            }
+            
+            updateDownloadProgress();
+        }
+        
+        function showDownloadOptions() {
+            const downloadOptions = document.getElementById('downloadOptions');
+            const domContent = document.getElementById('domContent');
+            const domloadBtn = document.getElementById('domloadBtn');
+            
+            // Show download options
+            downloadOptions.style.display = 'block';
+            downloadOptions.classList.add('fade-in');
+            
+            // Show DOM content (game details)
+            domContent.style.display = 'block';
+            domContent.classList.add('fade-in');
+            
+            // Update button text
+            domloadBtn.innerHTML = '<i class="fas fa-check"></i> Download Options Ready';
+            domloadBtn.classList.add('loaded');
+            
+            // Temporarily show header
+            const header = document.querySelector('header');
+            showHeader(header);
+            
+            // Scroll to download section
+            downloadOptions.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        }
+        
+        function showLocalFiles() {
+            // Hide Google Drive container
+            document.getElementById('googleDriveContainer').style.display = 'none';
+            
+            // Show local files container
+            const localContainer = document.getElementById('localFilesContainer');
+            localContainer.style.display = 'block';
+            localContainer.classList.add('fade-in');
+            
+            // Generate game parts if not already generated
+            if (document.getElementById('localFilesGrid').children.length === 0) {
+                generateGameParts();
+            }
+            
+            // Update progress
+            updateDownloadProgress();
+            
+            // Temporarily show header
+            const header = document.querySelector('header');
+            showHeader(header);
+            
+            // Scroll to local files
+            localContainer.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+        
+        function showGoogleDrive() {
+            // Hide local files container
+            document.getElementById('localFilesContainer').style.display = 'none';
+            
+            // Show Google Drive container
+            const driveContainer = document.getElementById('googleDriveContainer');
+            driveContainer.style.display = 'block';
+            driveContainer.classList.add('fade-in');
+            
+            // Temporarily show header
+            const header = document.querySelector('header');
+            showHeader(header);
+            
+            // Scroll to Google Drive
+            driveContainer.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+        
+        function trackDownload(partNumber, downloadLink) {
+            if (isDownloadingAll) return;
+            
+            // Add loading state
+            downloadLink.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
+            downloadLink.classList.add('loading');
+            
+            // Simulate download delay
+            setTimeout(() => {
+                // Add to downloaded parts if not already there
+                if (!downloadedParts.includes(partNumber)) {
+                    downloadedParts.push(partNumber);
                     
-                    // Scroll to content smoothly
-                    domContent.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'center'
-                    });
+                    // Save to localStorage
+                    localStorage.setItem('downloadedParts', JSON.stringify(downloadedParts));
                     
-                    // Update button state
-                    domloadBtn.classList.remove('loading');
-                    domloadBtn.classList.add('loaded');
-                    domloadBtn.innerHTML = '<i class="fas fa-check"></i> Download started <p style="text-align: center; font-size: xx-small;"><br> click again if download not started.</p>';
+                    // Mark as downloaded visually
+                    markAsDownloaded(partNumber);
                     
-                    contentLoaded = true;
-                }, 1200);
-            } else {
-                // Hide content
-                domContent.style.display = 'none';
+                    // Update progress
+                    updateDownloadProgress();
+                    
+                    // Show notification
+                    showNotification(`Part ${partNumber} downloaded successfully!`);
+                }
                 
                 // Reset button
-                domloadBtn.classList.remove('loaded');
-                domloadBtn.innerHTML = '<i class="fas fa-code-branch"></i> Download Game';
-                
-                contentLoaded = false;
-            }
-        });
+                downloadLink.innerHTML = '<i class="fas fa-download"></i> Download Again';
+                downloadLink.classList.remove('loading');
+            }, 1500);
+        }
         
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
+        function markAsDownloaded(partNumber) {
+            const fileItem = document.getElementById(`file-part-${partNumber}`);
+            const statusDiv = document.getElementById(`status-part-${partNumber}`);
+            
+            if (fileItem) {
+                fileItem.classList.add('downloaded');
+                statusDiv.innerHTML = '<span style="color: #00ff00;"><i class="fas fa-check-circle"></i> Downloaded</span>';
+            }
+        }
+        
+        function updateDownloadProgress() {
+            const progressBar = document.getElementById('downloadProgressBar');
+            const statusDiv = document.getElementById('downloadStatus');
+            const bulkBtn = document.getElementById('bulkDownloadBtn');
+            
+            const progress = (downloadedParts.length / TOTAL_PARTS) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            if (downloadedParts.length === TOTAL_PARTS) {
+                statusDiv.innerHTML = `
+                    <div style="color: #00ff00; padding: 10px; background: rgba(0, 255, 0, 0.1); border-radius: 4px;">
+                        <i class="fas fa-check-circle"></i> All 11 parts downloaded! Extract Part 01 to combine all files.
+                    </div>
+                `;
+                bulkBtn.disabled = true;
+                bulkBtn.innerHTML = '<i class="fas fa-check"></i> All Parts Downloaded';
+            } else if (downloadedParts.length > 0) {
+                statusDiv.innerHTML = `
+                    <div style="color: var(--secondary);">
+                        <i class="fas fa-spinner fa-spin"></i> Downloaded ${downloadedParts.length} of ${TOTAL_PARTS} parts.
+                        ${TOTAL_PARTS - downloadedParts.length} remaining. (${Math.round(progress)}%)
+                    </div>
+                `;
+                bulkBtn.disabled = false;
+            } else {
+                statusDiv.innerHTML = `
+                    <div style="color: var(--gray);">
+                        <i class="fas fa-info-circle"></i> Download all ${TOTAL_PARTS} parts and extract Part 01.
+                    </div>
+                `;
+                bulkBtn.disabled = false;
+            }
+        }
+        
+        function downloadAllParts() {
+            if (isDownloadingAll) return;
+            
+            isDownloadingAll = true;
+            const bulkBtn = document.getElementById('bulkDownloadBtn');
+            bulkBtn.disabled = true;
+            bulkBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting Downloads...';
+            
+            // Simulate downloading all parts
+            let currentPart = 1;
+            
+            function downloadNextPart() {
+                if (currentPart > TOTAL_PARTS) {
+                    // All parts downloaded
+                    isDownloadingAll = false;
+                    bulkBtn.innerHTML = '<i class="fas fa-check"></i> All Downloads Complete!';
+                    showNotification('All 11 parts download started! Check your browser downloads.');
+                    return;
+                }
                 
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
+                // Update button text
+                bulkBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Downloading Part ${currentPart}/${TOTAL_PARTS}...`;
                 
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                // Simulate download for this part
+                if (!downloadedParts.includes(currentPart)) {
+                    downloadedParts.push(currentPart);
+                    localStorage.setItem('downloadedParts', JSON.stringify(downloadedParts));
+                    markAsDownloaded(currentPart);
+                }
+                
+                // Trigger actual download
+                const fileName = `DeathUnit_Part${currentPart.toString().padStart(2, '0')}.rar`;
+                const filePath = `game_files/${fileName}`;
+                
+                // Create temporary link for download
+                const link = document.createElement('a');
+                link.href = filePath;
+                link.download = fileName;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Update progress
+                updateDownloadProgress();
+                
+                // Move to next part after delay
+                currentPart++;
+                setTimeout(downloadNextPart, 1000);
+            }
+            
+            // Start downloading
+            downloadNextPart();
+        }
+        
+        function trackGoogleDriveDownload() {
+            // Track Google Drive download
+            localStorage.setItem('googleDriveDownloaded', 'true');
+            
+            // Show notification
+            showNotification('Google Drive download started! Opening download page...');
+            
+            // Open installation instructions after a delay
+            setTimeout(() => {
+                if (confirm('Google Drive download starting! Would you like to view installation instructions?')) {
+                    alert('Installation Instructions:\n\n1. Download the game file from Google Drive\n2. If file is split into parts, download all parts\n3. Extract using WinRAR or 7-Zip\n4. Run DeathUnit.exe\n5. Enjoy the game!');
+                }
+            }, 1000);
+        }
+        
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--primary);
+                color: var(--dark);
+                padding: 15px 20px;
+                border-radius: 4px;
+                font-family: 'Orbitron', sans-serif;
+                font-weight: 600;
+                z-index: 9999;
+                animation: fadeIn 0.3s ease;
+                box-shadow: var(--neon-glow);
+                max-width: 300px;
+            `;
+            notification.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+            
+            // Add to body
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'fadeIn 0.3s ease reverse';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            // Load downloaded parts from localStorage
+            const savedParts = localStorage.getItem('downloadedParts');
+            if (savedParts) {
+                downloadedParts = JSON.parse(savedParts);
+            }
+            
+            // Setup auto-hide header
+            setupAutoHideHeader();
+            
+            // Update DOM with correct file sizes
+            document.querySelectorAll('.dom-item strong:contains("Game Size")').forEach(el => {
+                if (el.textContent.includes("Game Size")) {
+                    el.parentElement.querySelector('span').textContent = TOTAL_SIZE + " (11 Parts)";
                 }
             });
+            
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Temporarily show header for navigation
+                        const header = document.querySelector('header');
+                        showHeader(header);
+                        
+                        // Scroll to target
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
         });
-        
-        // Add subtle animation to hero title
-        const heroTitle = document.querySelector('.hero-title');
-        heroTitle.style.opacity = '0';
-        heroTitle.style.transform = 'translateY(20px)';
-        
-        setTimeout(() => {
-            heroTitle.style.transition = 'opacity 1s, transform 1s';
-            heroTitle.style.opacity = '1';
-            heroTitle.style.transform = 'translateY(0)';
-        }, 300);
-    });
-</script>
+    </script>
 </body>
 </html>
