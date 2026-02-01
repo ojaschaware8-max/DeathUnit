@@ -31,6 +31,7 @@
             color: var(--light);
             line-height: 1.7;
             overflow-x: hidden;
+            transition: filter 0.3s ease;
         }
         
         h1, h2, h3, h4, .logo, .nav-links a {
@@ -43,6 +44,80 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
+        }
+        
+        /* Mobile Rotate Overlay */
+        .rotate-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 18, 0.98);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .rotate-overlay.active {
+            display: flex;
+        }
+        
+        .rotate-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            animation: rotatePhone 2s ease-in-out infinite;
+        }
+        
+        .rotate-message {
+            font-size: 1.5rem;
+            color: var(--light);
+            margin-bottom: 20px;
+            max-width: 500px;
+        }
+        
+        .rotate-submessage {
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+        
+        .continue-anyway-btn {
+            background: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+            padding: 12px 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        
+        .continue-anyway-btn:hover {
+            background: rgba(0, 204, 255, 0.1);
+            box-shadow: var(--neon-glow-blue);
+            transform: translateY(-2px);
+        }
+        
+        @keyframes rotatePhone {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(90deg); }
+            50% { transform: rotate(90deg); }
+            75% { transform: rotate(90deg); }
+        }
+        
+        /* Body blur when overlay is active */
+        body.rotate-active {
+            overflow: hidden;
         }
         
         /* Header */
@@ -751,6 +826,17 @@
             .drive-link {
                 min-width: 100%;
             }
+            
+            /* Show rotate overlay on mobile in portrait mode */
+            @media (orientation: portrait) and (max-width: 768px) {
+                .rotate-overlay {
+                    display: flex;
+                }
+                
+                body {
+                    overflow: hidden;
+                }
+            }
         }
         
         /* Loading Animation */
@@ -808,6 +894,25 @@
     </style>
 </head>
 <body>
+    <!-- Mobile Rotate Overlay -->
+    <div class="rotate-overlay" id="rotateOverlay">
+        <div class="rotate-icon">
+            <i class="fas fa-mobile-alt"></i>
+        </div>
+        <h2 class="rotate-message">Please Rotate Your Device</h2>
+        <p class="rotate-submessage">
+            For the best experience viewing DeathUnit game website, 
+            please rotate your device to landscape mode (horizontal).
+        </p>
+        <p class="rotate-submessage">
+            This website is optimized for wider screens to showcase 
+            the game's features and download options properly.
+        </p>
+        <button class="continue-anyway-btn" id="continueAnywayBtn">
+            <i class="fas fa-desktop"></i> Continue Anyway
+        </button>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="container header-container">
@@ -1175,6 +1280,10 @@
         const PART_SIZE = "100 MB";
         const TOTAL_SIZE = "1 GB";
         
+        // Mobile rotation variables
+        let userDismissedRotation = false;
+        let rotationCheckInterval = null;
+        
         // Download tracking variables
         let downloadedParts = [];
         let isDownloadingAll = false;
@@ -1184,6 +1293,46 @@
         let isHeaderHidden = false;
         let scrollThreshold = 100;
         let mouseInHeaderArea = false;
+        
+        // Mobile rotation check
+        let halwa =true;
+        function checkDeviceOrientation() { if(halwa===true){ // Only show on mobile devices
+            if (!isMobileDevice()) return;
+            
+            const overlay = document.getElementById('rotateOverlay');
+            const isPortrait = window.innerHeight > window.innerWidth;
+            
+            // Check if user has dismissed the overlay
+           
+            
+            // Show overlay in portrait mode on mobile
+            if (isPortrait) {
+                overlay.classList.add('active');
+                document.body.classList.add('rotate-active');
+            } else {
+                overlay.classList.remove('active');
+                document.body.classList.remove('rotate-active');
+            }
+           
+        }}
+        
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        function dismissRotationOverlay() {
+            userDismissedRotation = true;
+            const overlay = document.getElementById('rotateOverlay');
+            overlay.classList.remove('active');
+            document.body.classList.remove('rotate-active');
+            
+            // Save preference to localStorage
+            localStorage.setItem('rotationDismissed', 'true');
+            
+            // Show notification
+            showNotification('You can now view the website in portrait mode');
+            halwa = false;
+        }
         
         // Initialize auto-hide header
         function setupAutoHideHeader() {
@@ -1407,7 +1556,7 @@
                     updateDownloadProgress();
                     
                     // Show notification
-                    showNotification(`Part ${partNumber} download starting!`);
+                    showNotification(`Part ${partNumber} download starting`);
                 }
                 
                 // Reset button
@@ -1570,8 +1719,24 @@
                 downloadedParts = JSON.parse(savedParts);
             }
             
+            // Check if user previously dismissed rotation overlay
+            const rotationDismissed = localStorage.getItem('rotationDismissed');
+            if (rotationDismissed === 'true') {
+                userDismissedRotation = true;
+            }
+            
             // Setup auto-hide header
             setupAutoHideHeader();
+            
+            // Check device orientation initially
+            checkDeviceOrientation();
+            
+            // Setup orientation change listener
+            window.addEventListener('resize', checkDeviceOrientation);
+            window.addEventListener('orientationchange', checkDeviceOrientation);
+            
+            // Setup continue anyway button
+            document.getElementById('continueAnywayBtn').addEventListener('click', dismissRotationOverlay);
             
             // Update DOM with correct file sizes
             document.querySelectorAll('.dom-item strong:contains("Game Size")').forEach(el => {
@@ -1602,9 +1767,19 @@
                     }
                 });
             });
+            
+            // Setup periodic orientation check for mobile
+            if (isMobileDevice()) {
+                rotationCheckInterval = setInterval(checkDeviceOrientation, 1000);
+            }
+        });
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', function() {
+            if (rotationCheckInterval) {
+                clearInterval(rotationCheckInterval);
+            }
         });
     </script>
 </body>
 </html>
-
-
